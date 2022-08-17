@@ -30,16 +30,20 @@ STICKIES ROUTERS
 
 */
 // WORKS
-router.post('/stickies', stickiesController.createStickies, (req, res) => {
-  console.log('end of create stickies route');
-  return res.status(200).send();
-  // return res.status(200).json({ newStickie: res.locals.newStickie });
-})
+// router.post('/stickies', stickiesController.createStickies, (req, res) => {
+//   console.log('end of create stickies route');
+//   return res.status(200).send();
+//   // return res.status(200).json({ newStickie: res.locals.newStickie });
+// })
 
 // WORKS
 router.get('/stickies', stickiesController.getStickies, (req, res) => {
   console.log('end of getStickies Route')
   return res.status(200).json({ stickies: res.locals.stickies });
+});
+
+router.post('/stickies', stickiesController.createStickies, (req, res) => {
+  console.log('stickie added!');
 });
 
 router.patch('/stickies', stickiesController.updateStickies, (req, res) => {

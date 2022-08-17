@@ -77,8 +77,9 @@ stickiesController.getStickies = (req, res, next) => {
 stickiesController.updateStickies = (req, res, next) => {
   console.log('In stickiesContr update stickies middleware function');
 
-  const values = [req.body.stickie_id, req.body.id, req.body.description, req.body.snack_id, req.body.assigned_id, req.body.workspace_id];
+  // const values = [req.body.stickie_id, req.body.id, req.body.description, req.body.snack_id, req.body.assigned_id, req.body.workspace_id];
 
+  const values = [req.body.title, req.body.description];
   // const values = [req.body.description, req.body.stickie_id];
 
   console.log('values', values);

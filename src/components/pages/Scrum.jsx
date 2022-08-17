@@ -74,7 +74,7 @@ function Scrum(props) {
     // HOW TO GET workspace ID?
     // taskObj.workspaceID =
     // console.log('task obj is:', taskObj);
-    fetch('/stickies', {
+    fetch('/api/stickies', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
