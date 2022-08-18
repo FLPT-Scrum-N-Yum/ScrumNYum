@@ -43,10 +43,9 @@ function WSSettings({ workspaces, setWorkspaces }) {
 
   const onDelete = (event) => {
     event.preventDefault();
-    const wsName = document.getElementById('ws-name').value;
-    // send this to backend to delete
-    //NOT SET UP W/ BACKEND
-    
+    fetch('/api/workspaces', {
+      method: 'DELETE'
+    });
   };
 
   return (

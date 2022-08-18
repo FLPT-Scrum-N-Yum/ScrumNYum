@@ -71,11 +71,17 @@ workspacesController.addWorkspace = (req, res, next) => {
 // delete request to api/workspaces without returning any data - WORKS
 workspacesController.deleteWorkspace = (req, res, next) => {
   console.log('in workspacesController.deleteWorkspace');
-  const query = 'DELETE FROM workspaces WHERE workspaces.id = $1';
-  // does second arg in query method need to be an array even if just one element??
-  console.log('this my req name', req.body.ws_name)
-  db.query(query, [req.body.ws_name])
-    .then(() => { return next() })
+
+  // get current workspaceID from workspaces cookie
+  const workspaceID = req.cookies.workspace;
+
+  const query = 'DELETE FROM workspace WHERE workspace.id = $1';
+  db.query(query, [workspaceID])
+    .then(() => {
+      // delete WS cookie
+      res.clearCookie('workspace');
+      return next()
+    })
     .catch((err) => {
       return next(
         createErr({
