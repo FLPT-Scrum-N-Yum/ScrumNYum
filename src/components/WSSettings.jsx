@@ -11,7 +11,7 @@ function WSSettings({ workspaces, setWorkspaces }) {
     // check what wsName
     console.log('workspacename', wsName);
     // const wsPassword = 'password';
-    document.getElementById('ws-name').reset();
+    document.getElementById('ws-name').value = '';
     //created the new workspace
     fetch('/api/workspaces', {
       method: 'POST',
@@ -23,6 +23,12 @@ function WSSettings({ workspaces, setWorkspaces }) {
         'Content-Type': 'application/json',
       },
     })
+
+    // Workspace should be clean and no stickies on the view
+    // Automatically set their workspace as the one they just created or the one you choose
+    // how do we know which workspace user is clicking on?
+
+
     // .then((res) => {
     //   // pull a new list of workspaces
     //   fetch('/api/workspaces')

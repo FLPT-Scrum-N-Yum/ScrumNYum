@@ -12,22 +12,26 @@ userController.createUser = (req, res, next) => {
   // console.log([username, password]);
 
   const query = `
-  INSERT INTO public.user (username, password)  
+  INSERT INTO public.user (id, username, password)  
   VALUES
-  ($1, $2);`;
+  (DEFAULT, $1, $2) RETURNING id;`;
 
   // check if username already exists in db, if not create user or else return to signup page
   db.query(query, [username, password])
     .then((response) => {
-      const query2 = `SELECT id FROM public.user
-      WHERE username = $1 AND password = $2;`;
-      db.query(query2, [username, password])
-        .then((response) => {
-          // console.log('user ID is: ', response.rows[0].id);
-          res.locals.id = response.rows[0].id;
-          console.log('query success');
-          return next();
-        })
+      
+      // fix signup to route to signup page
+      res.locals.id = response.rows[0].id;
+      return next()
+      // const query2 = `SELECT id FROM public.user
+      // WHERE username = $1 AND password = $2;`;
+      // db.query(query2, [username, password])
+      //   .then((response) => {
+      //     // console.log('user ID is: ', response.rows[0].id);
+      //     res.locals.id = response.rows[0].id;
+      //     console.log('query success');
+      //     return next();
+      //   })
     })
     .catch((err) => {
       return next({
