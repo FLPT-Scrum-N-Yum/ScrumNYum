@@ -79,14 +79,18 @@ workspacesController.deleteWorkspace = (req, res, next) => {
   const workspaceID = req.cookies.workspace;
   console.log('workspace id: ',workspaceID);
 
-  const query = 'DELETE FROM workspace WHERE workspace.id = $1;';
+  const query = `DELETE FROM stickies WHERE workspace_id = $1;`;
   db.query(query, [workspaceID])
+  .then(() => {
+    const query2 = `DELETE FROM workspace WHERE id = $1;`;
+    db.query(query2, [workspaceID])
     .then(() => {
-      // delete WS cookie
       console.log('in query');
       res.clearCookie('workspace');
-      return next()
+      return next();
     })
+  })
+
     // .catch((err) => {
     //   return next(
     //     createErr({
