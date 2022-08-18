@@ -30,14 +30,16 @@ stickiesController.createStickies = (req, res, next) => {
   console.log('stickies values: ', values);
 
   const query = `
-    INSERT INTO stickies  (title, description, workspace_id) 
-    VALUES ($1, $2, $3)`;
+    INSERT INTO stickies (id, title, description, workspace_id) 
+    VALUES (DEFAULT, $1, $2, $3) RETURNING id;`;
 
   // console.log('this my req body', req.body);
 
   db.query(query, values)
-    .then(() => {
+    .then((id) => {
       console.log('exited query');
+      console.log('returning??', id.rows[0].id);
+      res.locals.id = id.rows[0].id;
       // res.locals.newStickie = data.rows[0];
       return next()
     })
@@ -77,8 +79,15 @@ stickiesController.getStickies = (req, res, next) => {
 stickiesController.updateStickies = (req, res, next) => {
   console.log('In stickiesContr update stickies middleware function');
 
-  const values = [req.body.stickie_id, req.body.id, req.body.description, req.body.snack_id, req.body.assigned_id, req.body.workspace_id];
+  // User clicks edit on sticky with an id of 4 and it's the title and description
+  // User clicks update button, which sends a patch request to stickies endpoint
+  // in the req.body, we'll have the sticky_id, new title, and new description
+  // execute a query to update that sticky
 
+
+  // const values = [req.body.stickie_id, req.body.id, req.body.description, req.body.snack_id, req.body.assigned_id, req.body.workspace_id];
+
+  const values = [req.body.title, req.body.description];
   // const values = [req.body.description, req.body.stickie_id];
 
   console.log('values', values);
@@ -91,6 +100,7 @@ stickiesController.updateStickies = (req, res, next) => {
     ((req.body.assigned_id) ? ', assigned_id = $5' : '') +
     ((req.body.workspace_id) ? ', workspace_id = $6' : '')} 
      WHERE stickie_id = $1`
+
 
   // const query = `UPDATE stickies SET description = $1 WHERE stickie_id = $2`
 

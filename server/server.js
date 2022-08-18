@@ -46,9 +46,7 @@ app.get(['/scrum', '/settings'],
   });
 
 // create stickies route
-app.post('/stickies', stickiesController.createStickies, (req, res) => {
-  console.log('stickie added!');
-});
+
 
 // login to sign up
 app.post(
