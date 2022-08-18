@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
@@ -6,6 +6,24 @@ function Login() {
   function handleClick() {
     navigate('/signup');
   }
+
+  function handleCallbackResponse(response) {
+    console.log('Encoded JWT ID token: ' + response.credential);
+  }
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        '636811958559-ajbf7k2vegioaa50pam24s118rms8rke.apps.googleusercontent.com',
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
+      theme: 'outline',
+      size: 'large',
+    });
+  }, []);
 
   return (
     <div className='login-content d-flex vh-100 align-items-center'>
@@ -52,6 +70,7 @@ function Login() {
                 </button>
               </Link>
             </div>
+            <div id='signInDiv'></div>
           </form>
         </div>
       </div>

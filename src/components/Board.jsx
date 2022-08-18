@@ -13,7 +13,7 @@ function Board(props) {
   };
 
   const dragOver = (event) => {
-    console.log('this is an event: ', event)
+    console.log('this is an event: ', event);
     event.preventDefault();
   };
 
