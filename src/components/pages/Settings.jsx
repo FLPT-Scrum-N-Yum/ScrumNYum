@@ -26,8 +26,8 @@ function Settings() {
       <header className='settings-header'>
         <h1>Settings</h1>
         <nav className='settings-nav'>
-          <Link to='/' className='scrum-buttons'>
-            Logout
+        <Link to='/scrum' className='scrum-buttons'>
+            Back to Scrum
           </Link>
         </nav>
       </header>

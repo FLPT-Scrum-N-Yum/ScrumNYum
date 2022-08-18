@@ -11,7 +11,7 @@ function WSSettings({ workspaces, setWorkspaces }) {
     // check what wsName
     console.log('workspacename', wsName);
     // const wsPassword = 'password';
-    document.getElementById('ws-name').value = '';
+    document.getElementById('ws-name').reset();
     //created the new workspace
     fetch('/api/workspaces', {
       method: 'POST',
@@ -39,6 +39,8 @@ function WSSettings({ workspaces, setWorkspaces }) {
     event.preventDefault();
     const wsName = document.getElementById('ws-name').value;
     // send this to backend to delete
+    //NOT SET UP W/ BACKEND
+    
   };
 
   return (
