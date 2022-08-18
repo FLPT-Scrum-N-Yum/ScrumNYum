@@ -14,16 +14,16 @@ function Scrum(props) {
 
   // dummy card variable. this is for initial render, may want to remove
   const dummyCard = [
-    {
-      'task-title': 'Discuss Github Pronunciation',
-      'task-desc': 'Is it github, or jithub?',
-      snack: 'Trail-Mix',
-    },
-    {
-      'task-title': 'Discuss Github Pronunciation',
-      'task-desc': 'Is it github, or jithub?',
-      snack: 'Trail-Mix',
-    },
+    // {
+    //   'task-title': 'Discuss Github Pronunciation',
+    //   'task-desc': 'Is it github, or jithub?',
+    //   snack: 'Trail-Mix',
+    // },
+    // {
+    //   'task-title': 'Discuss Github Pronunciation',
+    //   'task-desc': 'Is it github, or jithub?',
+    //   snack: 'Trail-Mix',
+    // },
   ];
 
   // set state for cards. default to empty array as state and update state as tasks are submitted
@@ -74,17 +74,23 @@ function Scrum(props) {
 
   // WORKSPACES
 
-  const dummyWs = { id: 'The JitHub Zone' }
-  const [workspaces, setWorkspaces] = useState([dummyWs]);
+  const dummyWs = { 
+    id: '1',
+    wsName: 'The JitHub Zone'
+   }
+  
+   // hook to populate workspaces based on userID in dropdown menu
+  const [workspaces, setWorkspaces] = useState([]);
 
   // get workspaces list from database when page loads
   useEffect(() => {
     fetch('api/workspaces')
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
-        setWorkspaces(data.workspaces);
-      });
+        console.log('this is data: ', data)
+        // setWorkspaces(...dummyWs, data.workspaces);
+        setWorkspaces(data);
+      })
   }, []);
 
 
@@ -98,7 +104,7 @@ function Scrum(props) {
             Add Task
           </button>
           <h2 className='text-light'>Select Workspace:</h2>
-          <WSSelector workspaces={workspaces} setWorkspaces={setWorkspaces} />
+          <WSSelector workspaces={workspaces} setWorkspaces={setWorkspaces} setCards={setCards} cards={cards} />
           <WSSettings workspaces={workspaces} setWorkspaces={setWorkspaces} />
         </div>
         {openModal ? (
@@ -114,16 +120,16 @@ function Scrum(props) {
               <input
                 required
                 type='text'
-                name='taskTitle'
-                id='taskTitle'
+                name='title'
+                id='title'
                 placeholder='Title'
               ></input>
               <textarea
                 placeholder='Description'
                 className='stickie-description'
                 form='task_form'
-                id='taskDesc'
-                name='taskDesc'
+                id='description'
+                name='description'
                 rows='10'
                 cols='30'
               ></textarea>
@@ -154,8 +160,8 @@ function Scrum(props) {
             {cards.map((card, index) => {
               return (
                 <Card id={'card-' + index} className='card' draggable='true'>
-                  <p>{card['task-title']}</p>
-                  <p>Description: {card['task-desc']}</p>
+                  <p>{card['title']}</p>
+                  <p>Description: {card['description']}</p>
                   <p>Snack: {card.snack}</p>
                 </Card>
               );
