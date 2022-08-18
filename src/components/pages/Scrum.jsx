@@ -81,6 +81,9 @@ function Scrum(props) {
       },
       body: JSON.stringify(taskObj)
     })
+      .then(res => {
+
+      })
     // .then(() => {
     //   console.log(taskObj);
     // })
