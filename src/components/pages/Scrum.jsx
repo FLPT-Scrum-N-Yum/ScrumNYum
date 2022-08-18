@@ -27,6 +27,8 @@ function Scrum(props) {
     setOpenModal(false);
   };
 
+  let stickyID;
+
   // STRETCH FEATURE:
   // below const allows us to grab state passed from
   // WSSelector to populate our title
@@ -49,11 +51,14 @@ function Scrum(props) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(taskObj),
-    }).then((res) => {});
-    // .then(() => {
-    //   console.log(taskObj);
-    // })
+      body: JSON.stringify(taskObj)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('IS ID WORKING???', data.id);
+      stickyID = data.id;
+    });
+
     //form is submitted w/ K/V pairs
     event.target.reset();
     //resets the form to blank inputs
@@ -152,9 +157,6 @@ function Scrum(props) {
         ) : null}
         {/* 4 columns for our post its (w/ drag and drop ability) */}
         <div className='board-area'>
-          {/* create board component BOARD.JSX */}
-          {/* each BOARD will map out cards from database, IF stickies.position === board index */}
-          {/* each board will have a TITLE that is an array in state, [Not started, In Progress, ] */}
 
           <Board id='board-1' className='board' title='New'>
             {/* <Card id='card-1' className='card' draggable='true' >

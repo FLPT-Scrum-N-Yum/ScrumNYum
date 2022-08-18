@@ -38,7 +38,7 @@ stickiesController.createStickies = (req, res, next) => {
   db.query(query, values)
     .then((id) => {
       console.log('exited query');
-      console.log('returning??', id.rows[0].id);
+      // console.log('returning??', id.rows[0]);
       res.locals.id = id.rows[0].id;
       // res.locals.newStickie = data.rows[0];
       return next()
