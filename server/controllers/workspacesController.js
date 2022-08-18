@@ -13,17 +13,19 @@ const createErr = (errInfo) => {
   };
 };
 
+// query to find workspace ID and set a workspace cookie to identify which workspace you are working in
 workspacesController.findWorkspaceID = (req, res, next) => {
   // grab user id
   // workspace name
 
   console.log('in findWSID, body:', req.body);
-
+  
   // grabbing parameters from request
   // const { userID, workspacename } = req.body
   const { wsName } = req.body;
   const userID = req.cookies.ssid;
 
+  // added returning id to query
   const query = `SELECT id FROM workspace
 WHERE workspace_name = $1 AND user_id = $2;`;
 
@@ -32,6 +34,7 @@ WHERE workspace_name = $1 AND user_id = $2;`;
     .then((key) => {
       console.log('key is: ', key);
       res.cookie('workspace', key.rows[0].id, { httpOnly: true })
+      res.locals.wsid = key.rows[0].id;
       return next()
     })
 
@@ -40,12 +43,12 @@ WHERE workspace_name = $1 AND user_id = $2;`;
 // adding workspace to workspace table but not returning anything
 // post request to api/workspaces without returning any data - WORKS
 workspacesController.addWorkspace = (req, res, next) => {
-  console.log('in workspacesController.addWorkspace');
+  // console.log('in workspacesController.addWorkspace');
   const { wsName } = req.body;
   const userId = req.cookies.ssid;
   // console.log('req:', req)
-  console.log('ws name is: ', wsName);
-  console.log('req cookies:', req.cookies)
+  // console.log('ws name is: ', wsName);
+  // console.log('req cookies:', req.cookies)
   const query = `
     INSERT INTO workspace (workspace_name, user_id) 
     VALUES ($1, $2) `;
@@ -74,32 +77,37 @@ workspacesController.deleteWorkspace = (req, res, next) => {
 
   // get current workspaceID from workspaces cookie
   const workspaceID = req.cookies.workspace;
+  console.log('workspace id: ',workspaceID);
 
-  const query = 'DELETE FROM workspace WHERE workspace.id = $1';
+  const query = 'DELETE FROM workspace WHERE workspace.id = $1;';
   db.query(query, [workspaceID])
     .then(() => {
       // delete WS cookie
+      console.log('in query');
       res.clearCookie('workspace');
       return next()
     })
-    .catch((err) => {
-      return next(
-        createErr({
-          method: 'deleteWorkspace',
-          type: 'middleware error',
-          err: err,
-        })
-      );
-    });
+    // .catch((err) => {
+    //   return next(
+    //     createErr({
+    //       method: 'deleteWorkspace',
+    //       type: 'middleware error',
+    //       err: err,
+    //     })
+    //   );
+    // });
 }
 
 // getting workspace from workspace table and returning it
 // get request to api/workspaces and returning data - WORKS
 workspacesController.getWorkspaces = (req, res, next) => {
-  console.log('in workspacesController.getWorkspaces');
-  const query = 'SELECT id FROM workspaces';
-  db.query(query)
+
+  // query to select all workspaces that are created by user
+  const query = 'SELECT id, workspace_name as wsName FROM workspace WHERE user_id=$1;';
+  db.query(query, [req.cookies.ssid])
     .then((data) => {
+      // console.log('here is the data: ', data)
+      // saves all workspaces in res locals so we can send back to frontend to populate dropdown menu
       res.locals.workspaces = data.rows;
       return next();
     })

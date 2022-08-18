@@ -22,9 +22,9 @@ stickiesController.createStickies = (req, res, next) => {
 
   console.log('workspace cookies is: ', req.cookies.workspace);
 
-  const { taskTitle, taskDesc } = req.body;
+  const { title, description } = req.body;
   // NOTE: workspace_ID is hard-coded as 1 for now
-  const values = [taskTitle, taskDesc, req.cookies.workspace];
+  const values = [title, description, req.cookies.workspace];
 
   // const values = [task-title, task-desc, snack]
   console.log('stickies values: ', values);
@@ -59,6 +59,26 @@ stickiesController.createStickies = (req, res, next) => {
 stickiesController.getStickies = (req, res, next) => {
   const query = 'SELECT * FROM stickies';
   db.query(query)
+    .then((data) => {
+      res.locals.stickies = data.rows;
+      return next();
+    })
+    .catch((err) => {
+      return next(
+        createErr({
+          method: 'getWorkspace',
+          type: 'middleware error',
+          err: err,
+        })
+      );
+    });
+}
+
+stickiesController.getStickies2 = (req, res, next) => {
+  console.log('INSIDE GET STICKIES 2')
+  console.log(res.locals.wsid)
+  const query = 'SELECT * FROM stickies WHERE workspace_id=$1;';
+  db.query(query, [res.locals.wsid])
     .then((data) => {
       res.locals.stickies = data.rows;
       return next();
