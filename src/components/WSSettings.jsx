@@ -40,12 +40,13 @@ function WSSettings({ workspaces, setWorkspaces }) {
     // send this to backend to post
   };
 
-  // const onDelete = (event) => {
-  //   event.preventDefault();
-  //   const wsName = document.getElementById('ws-name').value;
-  //   // send this to backend to delete
-  //   //NOT SET UP W/ BACKEND
-  // };
+  const onDelete = (event) => {
+    event.preventDefault();
+    const wsName = document.getElementById('ws-name').value;
+    // send this to backend to delete
+    //NOT SET UP W/ BACKEND
+    
+  };
 
   return (
     // User types in ws name -> clicks create ws -> ws added to their ws/teams
