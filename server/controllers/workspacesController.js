@@ -73,10 +73,10 @@ workspacesController.addWorkspace = (req, res, next) => {
 // deleting workspace from workspace table but not returning anything
 // delete request to api/workspaces without returning any data - WORKS
 workspacesController.deleteWorkspace = (req, res, next) => {
-  // console.log('in workspacesController.deleteWorkspace');
+  console.log('in workspacesController.deleteWorkspace');
   const query = 'DELETE FROM workspaces WHERE workspaces.id = $1';
   // does second arg in query method need to be an array even if just one element??
-  // console.log('this my req name', req.body.ws_name)
+  console.log('this my req name', req.body.ws_name)
   db.query(query, [req.body.ws_name])
     .then(() => { return next() })
     .catch((err) => {

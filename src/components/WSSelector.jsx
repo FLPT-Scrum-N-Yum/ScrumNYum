@@ -1,12 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
   //TO DO - STATE MGMT FOR WS DROPDOWN (FETCH DATA FROM USER?)
-  // Make fetch request for all workspaces attached to user id
-  
-  // Create state to hold current selected workspace 
-  // onClick for enter workspace, send workspace name to backend (possibly ID?)
+  const [addWorkspace, setAddWorkspace] = useState(false);
+
+  const handleAdd = () => {
+    setAddWorkspace(addWorkspace ? false : true);
+  };
   const [wsName, selectWSName] = useState('oogaboogabooga')
 
   const setWSName = (e) => {
@@ -32,35 +33,63 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
         setCards(stickies)
         console.log('this is cards state ', cards)
       })
-      // useRef hook to grab ws name? or may need to use state variable
-      // const newCard = {
-      //   title: 'test',
-      //   description: 'test2',
-      //   workspace_id: '1'
-      // }
-      // setCards([...cards, newCard])
   }
-  return (
-    <div className='ws-selector-container'>
 
+  return (
+    <div>
       {/* User selects a ws -> clicks enter workspace -> send them to workspace/send data */}
-      <form action='#'>
-        <label htmlFor='ws-select'>Where will you be scrum-ing today?</label>
-        <select className="ws-dropdown" name="ws" id="ws" defaultValue='' onChange={setWSName}>
-          <option disabled hidden value=''>My Workspaces</option>
-          {/* this needs to be populated with values from DB */}
-          {/* <option value='Example'>Example</option> */}
-          {/* propery reference el.workspace (currently a placeholder value) */}
-          {workspaces.map((el) => {
-            return (
-              <option value={el.wsName} >{el.wsname}</option>
-            )
-          })}
-        </select>
-        <input type='submit' value='Enter Workspace' onClick={changeWorkspace}></input>
+      <form action='#' className='ws-container'>
+        {/* <span className='ws-heading'>Select a workspace</span> */}
+        <div className='ws-select'>
+          {addWorkspace ? <WSSettings /> : null}
+          <div className='ws-icon'>
+            <svg
+              onClick={handleAdd}
+              xmlns='http://www.w3.org/2000/svg'
+              width='20'
+              height='20'
+              fill='#264653'
+              className='bi bi-plus-square'
+              viewBox='0 0 16 16'
+            >
+              <path d='M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z' />
+              <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z' />
+            </svg>
+          </div>
+          <select
+            className='ws-dropdown ws-option'
+            name='ws'
+            id='ws'
+            defaultValue=''
+            onChange={setWSName}
+          >
+            <option className='ws-option' disabled hidden value=''>
+              My Workspaces
+            </option>
+            {/* this needs to be populated with values from DB */}
+            {/* <option value='Example'>Example</option> */}
+            {/* propery reference el.workspace (currently a placeholder value) */}
+            {workspaces.map((el) => {
+              return (
+                <option className='ws-option' value={el.id}>
+                  {el.id}
+                </option>
+              );
+            })}
+          </select>
+          {/* <input
+              className='ws-btn'
+              type='submit'
+              value='Enter Workspace'
+            ></input> */}
+          <button value='Enter Workspace' className='ws-btn' onClick={changeWorkspace}>
+            Enter
+          </button>
+          <button className='ws-btn'>Delete</button>
+        </div>
       </form>
     </div>
-  )
+  );
 }
 
 export default WSSelector;

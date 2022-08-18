@@ -22,12 +22,11 @@ function WSSettings({ workspaces, setWorkspaces }) {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
 
     // Workspace should be clean and no stickies on the view
     // Automatically set their workspace as the one they just created or the one you choose
     // how do we know which workspace user is clicking on?
-
 
     // .then((res) => {
     //   // pull a new list of workspaces
@@ -52,18 +51,19 @@ function WSSettings({ workspaces, setWorkspaces }) {
   return (
     // User types in ws name -> clicks create ws -> ws added to their ws/teams
     // User types in ws name -> clicks delete ws -> ws removed from their ws/teams (and db?)
-    <div className='ws-settings-container'>
-      <form id='ws_settings'>
+    <div>
+      <form id='ws_settings' className='ws-add'>
         <input
           required
           placeholder='Workspace Name'
           type='text'
           id='ws-name'
-          className='ws-name-text-box'
           name='ws-name'
         ></input>
-        <button onClick={onCreate}>Create Workspace</button>
-        <button onClick={onDelete}>Delete Workspace</button>
+        <button className='ws-btn' onClick={onCreate}>
+          Create Workspace
+        </button>
+        {/* <button onClick={onDelete}>Delete Workspace</button> */}
       </form>
     </div>
   );
