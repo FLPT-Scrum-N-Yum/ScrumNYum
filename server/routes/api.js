@@ -19,7 +19,7 @@ router.delete('/workspaces', workspacesController.deleteWorkspace, (req, res) =>
 
 // WORKS
 // DO WE HAVE ANY REQUEST TO JUST THE /API ENDPOINT?? - ASK JAVI AND AUTUMN
-router.get('/workspaces', workspacesController.getWorkspaces, (req, res) => {
+router.get('/workspaces/load', workspacesController.getWorkspaces, (req, res) => {
   // sends back workspaces to frontend
   return res.status(200).json(res.locals.workspaces);
 });

@@ -32,7 +32,7 @@ WHERE workspace_name = $1 AND user_id = $2;`;
   // find the workspace ID based on USER ID and workspace name params
   db.query(query, [wsName, userID])
     .then((key) => {
-      // console.log('key is: ', key);
+      console.log('key is: ', key);
       res.cookie('workspace', key.rows[0].id, { httpOnly: true })
       res.locals.wsid = key.rows[0].id;
       return next()
@@ -74,20 +74,28 @@ workspacesController.addWorkspace = (req, res, next) => {
 // delete request to api/workspaces without returning any data - WORKS
 workspacesController.deleteWorkspace = (req, res, next) => {
   console.log('in workspacesController.deleteWorkspace');
-  const query = 'DELETE FROM workspaces WHERE workspaces.id = $1';
-  // does second arg in query method need to be an array even if just one element??
-  console.log('this my req name', req.body.ws_name)
-  db.query(query, [req.body.ws_name])
-    .then(() => { return next() })
-    .catch((err) => {
-      return next(
-        createErr({
-          method: 'deleteWorkspace',
-          type: 'middleware error',
-          err: err,
-        })
-      );
-    });
+
+  // get current workspaceID from workspaces cookie
+  const workspaceID = req.cookies.workspace;
+  console.log('workspace id: ',workspaceID);
+
+  const query = 'DELETE FROM workspace WHERE workspace.id = $1;';
+  db.query(query, [workspaceID])
+    .then(() => {
+      // delete WS cookie
+      console.log('in query');
+      res.clearCookie('workspace');
+      return next()
+    })
+    // .catch((err) => {
+    //   return next(
+    //     createErr({
+    //       method: 'deleteWorkspace',
+    //       type: 'middleware error',
+    //       err: err,
+    //     })
+    //   );
+    // });
 }
 
 // getting workspace from workspace table and returning it

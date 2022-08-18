@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import WSSettings from './WSSettings.jsx'
 function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
   //TO DO - STATE MGMT FOR WS DROPDOWN (FETCH DATA FROM USER?)
   const [addWorkspace, setAddWorkspace] = useState(false);
@@ -8,10 +8,10 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
   const handleAdd = () => {
     setAddWorkspace(addWorkspace ? false : true);
   };
-  const [wsName, selectWSName] = useState('oogaboogabooga')
+  const [wsName, selectWSName] = useState('')
 
   const setWSName = (e) => {
-    // console.log(e.target.value)
+    console.log('this is taarget value', e.target.value)
     const wsname = e.target.value;
     selectWSName(wsname)
   }
@@ -34,6 +34,13 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
         console.log('this is cards state ', cards)
       })
   }
+
+  const onDelete = (event) => {
+    event.preventDefault();
+    fetch('/api/workspaces', {
+      method: 'DELETE'
+    });
+  };
 
   return (
     <div>
@@ -58,9 +65,9 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
           </div>
           <select
             className='ws-dropdown ws-option'
-            name='ws'
-            id='ws'
-            defaultValue=''
+            name='wsname'
+            id='wsname'
+            // defaultValue=''
             onChange={setWSName}
           >
             <option className='ws-option' disabled hidden value=''>
@@ -71,8 +78,8 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
             {/* propery reference el.workspace (currently a placeholder value) */}
             {workspaces.map((el) => {
               return (
-                <option className='ws-option' value={el.id}>
-                  {el.id}
+                <option className='ws-option' value={el.wsname}>
+                  {el.wsname}
                 </option>
               );
             })}
@@ -85,7 +92,7 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
           <button value='Enter Workspace' className='ws-btn' onClick={changeWorkspace}>
             Enter
           </button>
-          <button className='ws-btn'>Delete</button>
+          <button className='ws-btn' onClick={onDelete}>Delete</button>
         </div>
       </form>
     </div>

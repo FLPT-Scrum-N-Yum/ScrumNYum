@@ -12,6 +12,8 @@ function Scrum(props) {
   // How to logout?
   // Associating user's stickes w/ their acct and populating them on ws entry
 
+  // dummy card variable. this is for initial render, may want to remove
+  const dummyCard = [];
 
   // set state for cards. default to empty array as state and update state as tasks are submitted
   const [cards, setCards] = useState([...dummyCard]);
@@ -74,7 +76,7 @@ function Scrum(props) {
 
   // get workspaces list from database when page loads
   useEffect(() => {
-    fetch('api/workspaces')
+    fetch('api/workspaces/load')
       .then((response) => response.json())
       .then((data) => {
         console.log('this is data: ', data)
@@ -92,8 +94,8 @@ function Scrum(props) {
           <button className='task-btn' onClick={handleNewTask}>
             Add Task
           </button>
-          <h2 className='text-light'>Select Workspace:</h2>
-          <WSSelector workspaces={workspaces} setWorkspaces={setWorkspaces} />
+          {/* <h2 className='text-light'>Select Workspace:</h2> */}
+          <WSSelector workspaces={workspaces} setWorkspaces={setWorkspaces} cards={cards} setCards={setCards} />
           {/* <WSSettings workspaces={workspaces} setWorkspaces={setWorkspaces} /> */}
         </div>
         {openModal ? (
