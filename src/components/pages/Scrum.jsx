@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Board from '../Board.jsx';
 import Card from '../Card.jsx';
 import Nav from './Nav.jsx';
+import WSSelector from '../WSSelector.jsx';
+import WSSettings from '../WSSettings.jsx';
 import { useLocation, Link } from 'react-router-dom';
 
 function Scrum(props) {
@@ -12,31 +14,6 @@ function Scrum(props) {
 
   // dummy card variable. this is for initial render, may want to remove
   const dummyCard = [
-    {
-      'task-title': 'Discuss Github Pronunciation',
-      'task-desc': 'Is it github, or jithub?',
-      snack: 'Trail-Mix',
-    },
-    {
-      'task-title': 'Discuss Github Pronunciation',
-      'task-desc': 'Is it github, or jithub?',
-      snack: 'Trail-Mix',
-    },
-    {
-      'task-title': 'Discuss Github Pronunciation',
-      'task-desc': 'Is it github, or jithub?',
-      snack: 'Trail-Mix',
-    },
-    {
-      'task-title': 'Discuss Github Pronunciation',
-      'task-desc': 'Is it github, or jithub?',
-      snack: 'Trail-Mix',
-    },
-    {
-      'task-title': 'Discuss Github Pronunciation',
-      'task-desc': 'Is it github, or jithub?',
-      snack: 'Trail-Mix',
-    },
     {
       'task-title': 'Discuss Github Pronunciation',
       'task-desc': 'Is it github, or jithub?',
@@ -92,14 +69,35 @@ function Scrum(props) {
     // send get request to DB with task info in body
   }
 
+  // WORKSPACES
+
+  const dummyWs = { id: 'The JitHub Zone' }
+  const [workspaces, setWorkspaces] = useState([dummyWs]);
+
+  // get workspaces list from database when page loads
+  useEffect(() => {
+    fetch('api/workspaces')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data', data);
+        setWorkspaces(data.workspaces);
+      });
+  }, []);
+
+
   return (
     <div className='scrum-container'>
       <Nav />
       {/* Form element for post it creation */}
       <main className='scrum-main position-relative'>
-        <button className='bg-danger p-1 text-light' onClick={handleNewTask}>
-          Add Task
-        </button>
+        <div className='d-flex'>
+          <button className='bg-danger p-1 text-light' onClick={handleNewTask}>
+            Add Task
+          </button>
+          <h2 className='text-light'>Select Workspace:</h2>
+          <WSSelector workspaces={workspaces} setWorkspaces={setWorkspaces} />
+          <WSSettings workspaces={workspaces} setWorkspaces={setWorkspaces} />
+        </div>
         {openModal ? (
           <>
             <div className='bg-dark vw-100 vh-100 position-absolute top-0 start-0 opacity-50'>

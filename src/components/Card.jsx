@@ -23,11 +23,11 @@ function Card(props) {
       {/* generic label that don't know children ahead of time */}
       {props.children}
       <div className="dropdown">
-        <button type='button' class='btn btn-warning dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'>setting</button>
-        <div class="dropdown-menu">
-          <a class='dropdown-item' href='#'>View details</a>
-          <a class='dropdown-item' href='#'>Edit</a>
-          <a class='dropdown-item' href='#'>delete</a>
+        <button type='button' className='btn btn-warning dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'>setting</button>
+        <div className="dropdown-menu">
+          <a className='dropdown-item' href='#'>View details</a>
+          <a className='dropdown-item' href='#'>Edit</a>
+          <a className='dropdown-item' href='#'>delete</a>
         </div>
         {/* displays the map prop drilled from scrum?? (card) */}
       </div>
