@@ -11,21 +11,7 @@ function Scrum(props) {
   // Do we need to refer to backend when clicking settings?
   // How to logout?
   // Associating user's stickes w/ their acct and populating them on ws entry
-  const dummyWs = { id: 'The JitHub Zone' };
-  const [workspaces, setWorkspaces] = useState([dummyWs]);
-  // dummy card variable. this is for initial render, may want to remove
-  const dummyCard = [
-    // {
-    //   'task-title': 'Discuss Github Pronunciation',
-    //   'task-desc': 'Is it github, or jithub?',
-    //   snack: 'Trail-Mix',
-    // },
-    // {
-    //   'task-title': 'Discuss Github Pronunciation',
-    //   'task-desc': 'Is it github, or jithub?',
-    //   snack: 'Trail-Mix',
-    // },
-  ];
+
 
   // set state for cards. default to empty array as state and update state as tasks are submitted
   const [cards, setCards] = useState([...dummyCard]);
