@@ -23,6 +23,10 @@ function Scrum(props) {
     setOpenModal(!openModal ? true : false);
   };
 
+  const closeModel = () => {
+    setOpenModal(false);
+  };
+
   // STRETCH FEATURE:
   // below const allows us to grab state passed from
   // WSSelector to populate our title
@@ -56,6 +60,7 @@ function Scrum(props) {
     setCards([...cards, taskObj]);
     // console.log('task obj is: ', taskObj);
     // send get request to DB with task info in body
+    setOpenModal(false);
   };
 
   // WORKSPACES
@@ -66,12 +71,12 @@ function Scrum(props) {
     // send this to backend to delete
     //NOT SET UP W/ BACKEND
   };
-  const dummyWs = { 
+  const dummyWs = {
     id: '1',
-    wsName: 'The JitHub Zone'
-   }
-  
-   // hook to populate workspaces based on userID in dropdown menu
+    wsName: 'The JitHub Zone',
+  };
+
+  // hook to populate workspaces based on userID in dropdown menu
   const [workspaces, setWorkspaces] = useState([]);
 
   // get workspaces list from database when page loads
@@ -79,10 +84,10 @@ function Scrum(props) {
     fetch('api/workspaces/load')
       .then((response) => response.json())
       .then((data) => {
-        console.log('this is data: ', data)
+        console.log('this is data: ', data);
         // setWorkspaces(...dummyWs, data.workspaces);
         setWorkspaces(data);
-      })
+      });
   }, []);
 
   return (
@@ -95,7 +100,12 @@ function Scrum(props) {
             Add Task
           </button>
           {/* <h2 className='text-light'>Select Workspace:</h2> */}
-          <WSSelector workspaces={workspaces} setWorkspaces={setWorkspaces} cards={cards} setCards={setCards} />
+          <WSSelector
+            workspaces={workspaces}
+            setWorkspaces={setWorkspaces}
+            cards={cards}
+            setCards={setCards}
+          />
           {/* <WSSettings workspaces={workspaces} setWorkspaces={setWorkspaces} /> */}
         </div>
         {openModal ? (
@@ -133,7 +143,7 @@ function Scrum(props) {
                 <button type='submit' value='Submit' className='ws-btn'>
                   Submit
                 </button>
-                <button className='ws-btn' onClick={handleNewTask}>
+                <button className='ws-btn' onClick={closeModel}>
                   Cancel
                 </button>
               </div>
@@ -152,9 +162,15 @@ function Scrum(props) {
             {cards.map((card, index) => {
               return (
                 <Card id={'card-' + index} className='card' draggable='true'>
-                  <p>{card['title']}</p>
-                  <p>Description: {card['description']}</p>
-                  <p>Snack: {card.snack}</p>
+                  <p>
+                    <b>{card['title']}</b>
+                  </p>
+                  <p>
+                    <b>Description</b>: {card['description']}
+                  </p>
+                  <p>
+                    <b>Snack:</b> {card.snack}
+                  </p>
                 </Card>
               );
             })}

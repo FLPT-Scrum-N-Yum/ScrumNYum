@@ -1,7 +1,12 @@
 // import e from 'express';
 import React from 'react';
 
-function WSSettings({ workspaces, setWorkspaces }) {
+function WSSettings({
+  workspaces,
+  setWorkspaces,
+  addWorkspace,
+  setAddWorkspace,
+}) {
   //TO DO
   //depending on btn, create request on backend to post or delete
   //this should also cause update to our WS Selector list
@@ -24,6 +29,7 @@ function WSSettings({ workspaces, setWorkspaces }) {
       },
     });
 
+    setAddWorkspace(false);
     // Workspace should be clean and no stickies on the view
     // Automatically set their workspace as the one they just created or the one you choose
     // how do we know which workspace user is clicking on?
@@ -62,7 +68,7 @@ function WSSettings({ workspaces, setWorkspaces }) {
         <button className='ws-btn' onClick={onCreate}>
           Create Workspace
         </button>
-        <button onClick={onDelete}>Delete Workspace</button>
+        {/* <button>Delete Workspace</button> */}
       </form>
     </div>
   );
