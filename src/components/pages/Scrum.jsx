@@ -27,8 +27,6 @@ function Scrum(props) {
     setOpenModal(false);
   };
 
-  let stickyID;
-
   // STRETCH FEATURE:
   // below const allows us to grab state passed from
   // WSSelector to populate our title
@@ -42,7 +40,7 @@ function Scrum(props) {
     // console.log('task data is: ', taskData);
     // console.log('taskdata.entries: ', taskData.entries());
     const taskObj = Object.fromEntries(taskData.entries());
-
+    console.log('wghat the TASKOBJ LOOKS LIKE: ', taskObj)
     // HOW TO GET workspace ID?
     // taskObj.workspaceID =
     // console.log('task obj is:', taskObj);
@@ -56,7 +54,6 @@ function Scrum(props) {
     .then((response) => response.json())
     .then((data) => {
       console.log('IS ID WORKING???', data.id);
-      stickyID = data.id;
     });
 
     //form is submitted w/ K/V pairs
