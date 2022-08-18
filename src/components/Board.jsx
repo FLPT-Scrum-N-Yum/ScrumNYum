@@ -24,7 +24,7 @@ function Board(props) {
       className={props.className}
     >
       {/* props.children represents our cards */}
-      <h3>{props.title}</h3>
+      <h3 className='board-title'>{props.title}</h3>
       {props.children}
     </div>
   );

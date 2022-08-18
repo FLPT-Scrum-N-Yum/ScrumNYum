@@ -11,7 +11,8 @@ function Scrum(props) {
   // Do we need to refer to backend when clicking settings?
   // How to logout?
   // Associating user's stickes w/ their acct and populating them on ws entry
-
+  const dummyWs = { id: 'The JitHub Zone' };
+  const [workspaces, setWorkspaces] = useState([dummyWs]);
   // dummy card variable. this is for initial render, may want to remove
   const dummyCard = [
     {
@@ -54,28 +55,29 @@ function Scrum(props) {
     fetch('/api/stickies', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(taskObj)
-    })
-      .then(res => {
-        
-      })
+      body: JSON.stringify(taskObj),
+    }).then((res) => {});
     // .then(() => {
     //   console.log(taskObj);
     // })
-    //form is submitted w/ K/V pairs 
+    //form is submitted w/ K/V pairs
     event.target.reset();
     //resets the form to blank inputs
-    setCards([...cards, taskObj])
+    setCards([...cards, taskObj]);
     // console.log('task obj is: ', taskObj);
     // send get request to DB with task info in body
-  }
+  };
 
   // WORKSPACES
 
-  const dummyWs = { id: 'The JitHub Zone' }
-  const [workspaces, setWorkspaces] = useState([dummyWs]);
+  const onDelete = (event) => {
+    event.preventDefault();
+    const wsName = document.getElementById('ws-name').value;
+    // send this to backend to delete
+    //NOT SET UP W/ BACKEND
+  };
 
   // get workspaces list from database when page loads
   useEffect(() => {
@@ -87,31 +89,24 @@ function Scrum(props) {
       });
   }, []);
 
-
   return (
     <div className='scrum-container'>
       <Nav />
       {/* Form element for post it creation */}
       <main className='scrum-main position-relative'>
-        <div className='d-flex'>
-          <button className='bg-danger p-1 text-light' onClick={handleNewTask}>
+        <div className='ws-search'>
+          <button className='task-btn' onClick={handleNewTask}>
             Add Task
           </button>
-          <h2 className='text-light'>Select Workspace:</h2>
           <WSSelector workspaces={workspaces} setWorkspaces={setWorkspaces} />
-          <WSSettings workspaces={workspaces} setWorkspaces={setWorkspaces} />
+          {/* <WSSettings workspaces={workspaces} setWorkspaces={setWorkspaces} /> */}
         </div>
         {openModal ? (
-          <>
-            <div className='bg-dark vw-100 vh-100 position-absolute top-0 start-0 opacity-50'>
-              Test
-            </div>
-            <form
-              className='position-absolute top-50 start-50 translate-middle-x bg-light p-4'
-              id='task_form'
-              onSubmit={taskSubmit}
-            >
+          <div className='overlay-container'>
+            <div className='overlay'></div>
+            <form className='add-task' id='task_form' onSubmit={taskSubmit}>
               <input
+                className='add-input'
                 required
                 type='text'
                 name='taskTitle'
@@ -120,7 +115,7 @@ function Scrum(props) {
               ></input>
               <textarea
                 placeholder='Description'
-                className='stickie-description'
+                className='add-input'
                 form='task_form'
                 id='taskDesc'
                 name='taskDesc'
@@ -132,23 +127,25 @@ function Scrum(props) {
                 required
                 type='text'
                 name='snack'
-                className='snack-text'
+                className='add-input'
                 id='snack'
                 placeholder='Snack'
               ></input>
               {/* Add a clear button to clean form */}
-              <input
-                type='submit'
-                value='Submit'
-                className='scrum-description-button'
-              ></input>
-              <button onClick={handleNewTask}>Cancel</button>
+              <div className='add-task-btns'>
+                <button type='submit' value='Submit' className='ws-btn'>
+                  Submit
+                </button>
+                <button className='ws-btn' onClick={handleNewTask}>
+                  Cancel
+                </button>
+              </div>
             </form>
-          </>
+          </div>
         ) : null}
         {/* 4 columns for our post its (w/ drag and drop ability) */}
         <div className='board-area'>
-          <Board id='board-1' className='board' title='New Task'>
+          <Board id='board-1' className='board' title='New'>
             {/* <Card id='card-1' className='card' draggable='true' >
             </Card> */}
             {cards.map((card, index) => {
