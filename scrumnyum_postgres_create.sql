@@ -39,3 +39,10 @@ CREATE TABLE public.stickies (
 	PRIMARY KEY ("id"),
 	FOREIGN KEY ("workspace_id") REFERENCES public.workspace("id")
 );
+
+
+-- instead of declaring FOREIGN KEY inside each table, use alter statements to add constraints.
+
+-- ALTER TABLE public.stickies ADD CONSTRAINT "stickies_fk0" FOREIGN KEY ("snack_id") REFERENCES  public.snacks("id");
+-- ALTER TABLE public.stickies ADD CONSTRAINT "stickies_fk1" FOREIGN KEY ("assigned_id") REFERENCES  public.user("id");
+-- ALTER TABLE public.stickies ADD CONSTRAINT "stickies_fk2" FOREIGN KEY ("workspace_id") REFERENCES  public.workspace("id");
