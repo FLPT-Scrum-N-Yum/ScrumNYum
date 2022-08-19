@@ -64,4 +64,8 @@ router.delete('/stickies', stickiesController.deleteStickies, (req, res) => {
   return res.status(200).send();
 })
 
+router.patch('/stickies/position', stickiesController.updatePosition, (req, res) => {
+  console.log('end of update position sticky route')
+  return res.status(200).send()
+})
 module.exports = router;
