@@ -54,12 +54,14 @@ function Scrum(props) {
     .then((response) => response.json())
     .then((data) => {
       console.log('IS ID WORKING???', data.id);
+      taskObj.id = data.id
+      setCards([...cards, taskObj]);
     });
-
+    console.log('THIS IS NEW TASKOBJ ', taskObj)
     //form is submitted w/ K/V pairs
     event.target.reset();
     //resets the form to blank inputs
-    setCards([...cards, taskObj]);
+
     // console.log('task obj is: ', taskObj);
     // send get request to DB with task info in body
     setOpenModal(false);
@@ -160,7 +162,7 @@ function Scrum(props) {
             </Card> */}
             {cards.map((card, index) => {
               return (
-                <Card id={'card-' + index} className='card' draggable='true'>
+                <Card id={'card-'+ index} dbID={card.id} className='card' draggable='true'>
                   <p>
                     <b>{card['title']}</b>
                   </p>

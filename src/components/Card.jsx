@@ -22,6 +22,7 @@ function Card(props) {
     <div
       className='stickie'
       id={props.id}
+      dbID = {props.dbID}
       onDragStart={dragStart}
       onDragOver={dragOver}
       draggable='true'
