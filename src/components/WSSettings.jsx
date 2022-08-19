@@ -52,6 +52,9 @@ function WSSettings({
   //     method: 'DELETE'
   //   });
   // };
+  const cancelAdd = () => {
+    setAddWorkspace(false);
+  };
 
   return (
     // User types in ws name -> clicks create ws -> ws added to their ws/teams
@@ -67,6 +70,9 @@ function WSSettings({
         ></input>
         <button className='ws-btn' onClick={onCreate}>
           Create Workspace
+        </button>
+        <button className='ws-btn' onClick={cancelAdd}>
+          Cancel
         </button>
         {/* <button>Delete Workspace</button> */}
       </form>
