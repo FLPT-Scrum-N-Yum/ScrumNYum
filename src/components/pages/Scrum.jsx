@@ -40,7 +40,7 @@ function Scrum(props) {
     // console.log('task data is: ', taskData);
     // console.log('taskdata.entries: ', taskData.entries());
     const taskObj = Object.fromEntries(taskData.entries());
-
+    console.log('wghat the TASKOBJ LOOKS LIKE: ', taskObj)
     // HOW TO GET workspace ID?
     // taskObj.workspaceID =
     // console.log('task obj is:', taskObj);
@@ -49,15 +49,19 @@ function Scrum(props) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(taskObj),
-    }).then((res) => {});
-    // .then(() => {
-    //   console.log(taskObj);
-    // })
+      body: JSON.stringify(taskObj)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('IS ID WORKING???', data.id);
+      taskObj.id = data.id
+      setCards([...cards, taskObj]);
+    });
+    console.log('THIS IS NEW TASKOBJ ', taskObj)
     //form is submitted w/ K/V pairs
     event.target.reset();
     //resets the form to blank inputs
-    setCards([...cards, taskObj]);
+
     // console.log('task obj is: ', taskObj);
     // send get request to DB with task info in body
     setOpenModal(false);
@@ -154,16 +158,13 @@ function Scrum(props) {
         ) : null}
         {/* 4 columns for our post its (w/ drag and drop ability) */}
         <div className='board-area'>
-          {/* create board component BOARD.JSX */}
-          {/* each BOARD will map out cards from database, IF stickies.position === board index */}
-          {/* each board will have a TITLE that is an array in state, [Not started, In Progress, ] */}
 
           <Board id='board-1' className='board' title='New'>
             {/* <Card id='card-1' className='card' draggable='true' >
             </Card> */}
             {cards.map((card, index) => {
               return (
-                <Card id={'card-' + index} className='card' draggable='true'>
+                <Card id={'card-'+ index} dbID={card.id} className='card' draggable='true'>
                   <p>
                     <b>
                       <b>Task:</b> {card['title']}

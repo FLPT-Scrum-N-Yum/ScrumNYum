@@ -30,9 +30,9 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
       .then((response) => response.json())
       .then((stickies) => {
         console.log('setting cards');
-        console.log(stickies);
+        console.log('these are the stickies: ', stickies);
         setCards(stickies);
-        console.log('this is cards state ', cards);
+        // console.log('this is cards state ', cards);
       });
   };
 

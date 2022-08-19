@@ -49,7 +49,8 @@ router.get('/stickies', stickiesController.getStickies, (req, res) => {
 
 router.post('/stickies', stickiesController.createStickies, (req, res) => {
   console.log('stickie added!');
-  return res.status(200).json(res.locals.id)
+  console.log('res locals ID in api.js', res.locals.id);
+  return res.status(200).send({ id: res.locals.id });
 });
 
 router.patch('/stickies', stickiesController.updateStickies, (req, res) => {
