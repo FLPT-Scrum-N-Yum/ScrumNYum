@@ -26,6 +26,7 @@
     "concurrently": "^7.3.0",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.1",
+    "jwt-decode": "^3.1.2",
     "path": "^0.12.7",
     "pg": "^8.7.3",
     "postgres": "^3.2.4",

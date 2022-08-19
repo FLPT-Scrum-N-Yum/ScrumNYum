@@ -35,7 +35,7 @@ function Card(props) {
           className='elipses'
           onClick={handleOpenSettings}
           // className='btn btn-warning dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'
-        > 
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='16'
