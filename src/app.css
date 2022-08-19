@@ -137,7 +137,7 @@ button {
   margin-right: 15rem;
   /* margin-top: 50px; */
   /* border: solid; */
-  min-height: 80vh;
+  min-height: 75vh;
   border-radius: 0.4rem;
   box-shadow: 0 0.2rem 0.6rem rgb(0, 0, 0, 0.6);
 }
@@ -255,6 +255,18 @@ input:focus {
   padding: 0.2rem 0.4rem;
   border-radius: 0.4rem;
   font-size: 1rem;
+  border: none;
+  box-shadow: 0 0.1rem 0.2rem rgb(0, 0, 0, 0.6);
+  transition: all 0.2s;
+}
+
+.login-button:hover {
+  background-color: #e9edee;
+  color: #264653;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  box-shadow: 0 0.1rem 0.2rem rgb(0, 0, 0, 0.6);
   border: none;
 }
 
