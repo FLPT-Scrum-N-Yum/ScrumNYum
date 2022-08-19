@@ -24,21 +24,21 @@ stickiesController.createStickies = (req, res, next) => {
 
   const { title, description } = req.body;
   // NOTE: workspace_ID is hard-coded as 1 for now
-  const values = [title, description, req.cookies.workspace];
+  const values = [title, description, req.cookies.workspace, 'board-1'];
 
   // const values = [task-title, task-desc, snack]
   console.log('stickies values: ', values);
 
   const query = `
-    INSERT INTO stickies (id, title, description, workspace_id) 
-    VALUES (DEFAULT, $1, $2, $3) RETURNING id;`;
+    INSERT INTO stickies (id, title, description, workspace_id, position) 
+    VALUES (DEFAULT, $1, $2, $3, $4) RETURNING id;`;
 
   // console.log('this my req body', req.body);
 
   db.query(query, values)
     .then((id) => {
       console.log('exited query');
-      console.log('returning??', id.rows[0].id);
+      // console.log('returning??', id.rows[0]);
       res.locals.id = id.rows[0].id;
       // res.locals.newStickie = data.rows[0];
       return next()

@@ -9,11 +9,16 @@ function Board(props) {
     const card = document.getElementById(card_id);
     card.style.display = 'block';
 
+    // When the sticky is dropped, update the position value for that sticky in the database
+    console.log('target: ', event.target);
+
+
+
     event.target.appendChild(card);
   };
 
   const dragOver = (event) => {
-    console.log('this is an event: ', event)
+    // console.log('this is an event: ', event)
     event.preventDefault();
   };
 
