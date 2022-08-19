@@ -171,4 +171,18 @@ stickiesController.deleteStickies = (req, res, next) => {
     });
 }
 
+stickiesController.updatePosition = (req, res, next) => {
+  const query = `UPDATE public.stickies
+  SET position = $1;`; 
+
+  const { position } = req.body 
+  db.query(query, [position])
+  .then((res) => {
+    console.log(res)
+    return next()
+  })
+  .catch((err) => {
+    console.log('you suck because of this, ', err)
+  })
+}
 module.exports = stickiesController;

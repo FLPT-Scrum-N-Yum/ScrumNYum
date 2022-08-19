@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function Board(props) {
   const drop = (event) => {
@@ -10,11 +10,27 @@ function Board(props) {
     card.style.display = 'block';
 
     // When the sticky is dropped, update the position value for that sticky in the database
-    console.log('target: ', event.target);
+    
+      
+      event.target.appendChild(card);
 
+      const position = event.target.id; // board-2
 
+      const stickyID = event.target.firstChild.nextSibling.getAttribute('dbid');
+      // console.log('this is TICKET ID: ', ticket.dbID);
+      console.log(stickyID);
+      // console.log('target: ', document.getElementsByClassName('stickie'));
+      
+    // const userToDelete = document.getElementsByClassName('rowOnClick')[0].firstChild.nextSibling.textContent;
 
-    event.target.appendChild(card);
+    // fetch('/api/stickies/position', {
+    // method: 'PATCH',
+    // headers: {
+    //   'Content-Type': 'application/json',
+    // },
+    // body: 
+    // })
+
   };
 
   const dragOver = (event) => {
