@@ -90,6 +90,8 @@ function Scrum(props) {
       });
   }, []);
 
+  // CLOSE MODALS
+
   return (
     <div className='scrum-container'>
       <Nav />
@@ -163,7 +165,9 @@ function Scrum(props) {
               return (
                 <Card id={'card-' + index} className='card' draggable='true'>
                   <p>
-                    <b>{card['title']}</b>
+                    <b>
+                      <b>Task:</b> {card['title']}
+                    </b>
                   </p>
                   <p>
                     <b>Description</b>: {card['description']}

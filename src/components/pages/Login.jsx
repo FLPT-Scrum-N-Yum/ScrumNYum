@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 function Login() {
+  const [user, setUser] = useState({});
+
   let navigate = useNavigate();
-  function handleClick() {
-    navigate('/signup');
+
+  function OAuthLogin() {
+    navigate('/scrum');
   }
 
   function handleCallbackResponse(response) {
     console.log('Encoded JWT ID token: ' + response.credential);
+    const userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    setUser(userObject);
+    document.getElementById('signInDiv').hidden = true;
+    OAuthLogin();
+  }
+
+  function handleSignOut(e) {
+    setUser({});
+    document.getElementById('signInDiv').hidden = false;
   }
 
   useEffect(() => {
@@ -23,6 +37,8 @@ function Login() {
       theme: 'outline',
       size: 'large',
     });
+
+    google.accounts.id.prompt();
   }, []);
 
   return (

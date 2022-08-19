@@ -43,6 +43,8 @@ function WSSelector({ workspaces, setWorkspaces, cards, setCards }) {
     });
   };
 
+  // const cancelAdd
+
   return (
     <div>
       {/* User selects a ws -> clicks enter workspace -> send them to workspace/send data */}

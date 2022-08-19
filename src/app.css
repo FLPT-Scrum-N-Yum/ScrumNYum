@@ -31,7 +31,7 @@ button {
   position: relative;
 }
 
-.overlay {
+/* .overlay {
   background-color: rgba(0, 0, 0, 0.5);
   height: 102.2vh;
   width: 100vw;
@@ -40,12 +40,12 @@ button {
   left: 0;
   transform: translateY(-15%);
   z-index: 9998;
-}
+} */
 
 .add-task {
   position: absolute;
-  top: 25%;
-  left: 50%;
+  top: -30%;
+  left: 25%;
   transform: translateX(-50%);
   background-color: #e9edee;
   padding: 1.2rem 2rem;
@@ -237,6 +237,7 @@ button {
   border-radius: 0.4rem;
   border: none;
   box-shadow: 0 0.1rem 0.2rem rgb(0, 0, 0, 0.6);
+  width: 12.6rem;
 }
 
 input:focus {
@@ -463,6 +464,12 @@ input {
 
 .card {
   font: 1.2em san-serif;
-  background-color: #bde0fe;
+  background-color: #f8ad9d;
   border-radius: 20% 10%;
+}
+
+/* OAUTH */
+
+#signInDiv {
+  margin-top: 1rem;
 }
